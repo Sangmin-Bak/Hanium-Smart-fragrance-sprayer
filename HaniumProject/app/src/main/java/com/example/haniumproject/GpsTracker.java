@@ -14,7 +14,7 @@ import android.support.v4.content.ContextCompat;
 import android.util.Log;
 
 /*
- * 현재 위치를 가져와 주소로 변환
+ * 위치 정보 업데이트를 담당
  */
 public class GpsTracker extends Service implements LocationListener {
 
@@ -23,8 +23,8 @@ public class GpsTracker extends Service implements LocationListener {
     double latitude;
     double longitude;
 
-    private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 10;
-    private static final long MIN_TIME_BW_UPDATES = 1000 * 60 * 1;
+    private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 10;     // 최소 GPS 정보 업데이트 거리 10미터
+    private static final long MIN_TIME_BW_UPDATES = 1000 * 60 * 1;      // 최소 GPS 정보 업데이트 시간 msec(1분)
     protected LocationManager locationManager;
 
 
@@ -38,10 +38,11 @@ public class GpsTracker extends Service implements LocationListener {
         try {
             locationManager = (LocationManager) mContext.getSystemService(LOCATION_SERVICE);
 
-            boolean isGPSEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
-            boolean isNetworkEnabled = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+            boolean isGPSEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);             // 현재 GPS 사용 유무 확인
+            boolean isNetworkEnabled = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);     // 현재 네트워크 사용 유무 확인
 
             if (!isGPSEnabled && !isNetworkEnabled) {
+                // GPS와 네트워크 모두 사용하지 않고 있다면
 
             } else {
 
@@ -53,14 +54,11 @@ public class GpsTracker extends Service implements LocationListener {
 
                 if (hasFineLocationPermission == PackageManager.PERMISSION_GRANTED &&
                         hasCoarseLocationPermission == PackageManager.PERMISSION_GRANTED) {
-
-                    ;
                 } else
                     return null;
 
-
+                // 네크워크가 연결되어 있는 상태
                 if (isNetworkEnabled) {
-
 
                     locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, MIN_TIME_BW_UPDATES, MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
 
@@ -75,7 +73,7 @@ public class GpsTracker extends Service implements LocationListener {
                     }
                 }
 
-
+                // GPS가 켜져 있는 상태
                 if (isGPSEnabled)
                 {
                     if (location == null)
@@ -86,8 +84,8 @@ public class GpsTracker extends Service implements LocationListener {
                             location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
                             if (location != null)
                             {
-                                latitude = location.getLatitude();
-                                longitude = location.getLongitude();
+                                latitude = location.getLatitude();      // 현재 위도 저장
+                                longitude = location.getLongitude();    // 현재 경도 저장
                             }
                         }
                     }

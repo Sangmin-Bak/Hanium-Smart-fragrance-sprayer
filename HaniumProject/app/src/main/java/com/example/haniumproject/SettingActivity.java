@@ -8,6 +8,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.support.v7.widget.Toolbar;
 
+/*
+ *  분사할 향기 및 분사 시간을 설정하는 액티비티
+ */
+
 public class SettingActivity extends AppCompatActivity {
 
     Toolbar mToolbar;

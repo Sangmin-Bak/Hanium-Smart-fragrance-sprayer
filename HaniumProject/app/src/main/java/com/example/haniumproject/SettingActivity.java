@@ -1,21 +1,15 @@
 package com.example.haniumproject;
 
 import android.annotation.SuppressLint;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
 import android.support.annotation.Nullable;
-import android.support.v4.app.FragmentManager;
-import android.support.v7.app.AppCompatActivity;
-import android.view.MenuItem;
-import android.support.v7.widget.Toolbar;
 
 /*
  *  분사할 향기 및 분사 시간을 설정하는 액티비티
+ *  차후 데이터베이스와 연동하여 설정 값을 데이터베이스에 저장
  */
 public class SettingActivity extends PreferenceActivity {
-
- //   Toolbar mToolbar;
 
     @SuppressLint("NewApi")
     @Override
@@ -24,25 +18,7 @@ public class SettingActivity extends PreferenceActivity {
      //   setContentView(R.layout.activity_setting);
 
         addPreferencesFromResource(R.xml.setting_preference);
-/*
-        // 툴바 정의
-        mToolbar = (Toolbar) findViewById(R.id.setting_toolbar);
-        mToolbar.setTitle("설정");        // 설정 액티비티의 툴바 타이틀
-        mToolbar.setTitleTextColor(Color.WHITE);
-        setSupportActionBar(mToolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-*/
-       // FragmentManager fragmentManager = getSupportFragmentManager();
-       // fragmentManager.beginTransaction().replace(R.id.settings_fragment, new SettingPreferenceFragment()).commit();
+
     }
-/*
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                onBackPressed();
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }*/
+
 }

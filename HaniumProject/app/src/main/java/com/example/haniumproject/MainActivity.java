@@ -6,6 +6,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -33,6 +34,9 @@ public class MainActivity extends AppCompatActivity
     FragmentManager fragmentManager;
     FragmentTransaction transaction;
 
+    FragmentAdapter fragmentAdapter;
+    ViewPager viewPager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,6 +63,8 @@ public class MainActivity extends AppCompatActivity
                 transaction.setCustomAnimations(R.anim.slide_down, R.anim.slide_up);        // 날씨 예보 화면으로 이동 시 애니메이션 추가
                 transaction.replace(R.id.content_main, new WeatherLayout()).commit();
                 transaction.addToBackStack(null); // 백 버튼을 누르면 처음 화면으로 돌아감
+
+
             }
         });
 

@@ -6,7 +6,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.webkit.WebChromeClient;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -44,101 +47,67 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 import okio.BufferedSink;
 
-
 public class MainActivity extends AppCompatActivity {
 
     final String TAG = "MainActivity";
     ToggleButton ledButton;
-    TextView led_tx;
+
+    WebView webView;
+    WebSettings webSettings;
 
     String ledStatus;
 
-    JSONObject myJSON;
+    HttpConnection httpConn = HttpConnection.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        led_tx = (TextView) findViewById(R.id.led_tx);
-        ledButton = (ToggleButton) findViewById(R.id.toggleButton);
+        ledButton = (ToggleButton)findViewById(R.id.toggleButton);
+        webView = (WebView) findViewById(R.id.webView);
+        webSettings = webView.getSettings();
+        webSettings.setJavaScriptEnabled(true);
+
+        //토글버튼 클릭 이벤트
         ledButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-              //  String ledStatus;
-                if(ledButton.isChecked()) {
+            public void onClick(View view) {
+                if(ledButton.isChecked()){
                     Toast.makeText(MainActivity.this, "ON", Toast.LENGTH_SHORT).show();
                     ledStatus = "ON";
                 } else {
                     Toast.makeText(MainActivity.this, "OFF", Toast.LENGTH_SHORT).show();
                     ledStatus = "OFF";
                 }
+                sendData(ledStatus);
+       //         webView.loadUrl("http://192.168.55.242/LED.html");
+       //         webView.setWebChromeClient(new WebChromeClient());
 
-                String serverAddress = "192.168.55.242:3306/LED_Status.php";
-                try {
-                    HttpRequestTask requestTask = new HttpRequestTask(serverAddress);
-                    led_tx.setText((CharSequence) myJSON);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
             }
         });
     }
 
-    public class HttpRequestTask extends AsyncTask<String, Void, String> {
-        private String serverAddress;
-        Response response;
-
-        public HttpRequestTask(String serverAddress) throws IOException {
-            this.serverAddress = serverAddress;
-        }
-
-        @Override
-        protected String doInBackground(String... params) {
-            String val = params[0];
-         //   final String url = "http://" + serverAddress + "/" + val;
-            final String url = "http://" + serverAddress;
-
-            OkHttpClient client = new OkHttpClient();
-
-            RequestBody formBody = new FormBody.Builder()
-                    .add("ledStatus", ledStatus)
-                    .build();
-
-            Request request = new Request.Builder()
-                    .url(url)
-                    .post(formBody)
-                    .build();
-
-            client.newCall(request).enqueue(callback);
-
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            super.onPostExecute(result);
-        }
-
-        @Override
-        protected void onCancelled() {
-            super.onCancelled();
-        }
-
-       private Callback callback = new Callback() {
-           @Override
-           public void onFailure(Call call, IOException e) {
-
-           }
-
-           @Override
-           public void onResponse(Call call, Response response) throws IOException {
-               try {
-                   myJSON = new JSONObject(response.body().string());
-               } catch (JSONException e) {
-                   e.printStackTrace();
-               }
-           }
-       };
+    private void sendData(final String ledStatus) {
+// 네트워크 통신하는 작업은 무조건 작업스레드를 생성해서 호출 해줄 것!!
+        new Thread() {
+            public void run() {
+// 파라미터 2개와 미리정의해논 콜백함수를 매개변수로 전달하여 호출
+                httpConn.requestWebServer(ledStatus, callback);
+            }
+        }.start();
     }
+
+    private final Callback callback = new Callback() {
+        @Override
+        public void onFailure(Call call, IOException e) {
+            Log.d(TAG, "콜백오류:"+e.getMessage());
+        }
+        @Override
+        public void onResponse(Call call, Response response) throws IOException {
+            String body = response.body().string();
+            Log.d(TAG, "서버에서 응답한 Body:"+body);
+        }
+    };
+
 }

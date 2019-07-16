@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory android:title="사용자 설정">
+        <SwitchPreference
+            android:key="message"
+            android:title="자동 분사"/>
+
+        <PreferenceScreen
+            android:key="keyword_screen"
+            android:title="향기 선택"
+            android:summary="사용안함">
+
+            <EditTextPreference
+                android:key="first"
+                android:title="맑음 향"/>
+            <EditTextPreference
+                android:key="second"
+                android:title="흐림 향"/>
+            <EditTextPreference
+                android:key="third"
+                android:title="비옴 향"/>
+
+        </PreferenceScreen>
+
+        <EditTextPreference
+            android:key="time_setting"
+            android:title="분사 시간"
+            android:summary="분사될 시간을 입력합니다."/>
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

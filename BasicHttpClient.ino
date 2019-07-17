@@ -45,6 +45,7 @@ void setup() {
 // 접속 속도를 높이던가 소켓서버를 사용하던가 해야함
 
 void loop() {
+  String msg;
   char count = 0;
   // wait for WiFi connection
   if ((WiFiMulti.run() == WL_CONNECTED)) {
@@ -56,9 +57,14 @@ void loop() {
     Serial.print("[HTTP] begin...\n");
     if (http.begin(client, "http://192.168.55.242/read.php")) {  // HTTP
 
-      connect_web();
+      msg = connect_web();
+      if(msg == "ON"){ 
+        digitalWrite(D1, HIGH);
+      }
+      else if(msg == "OFF") {
+        digitalWrite(D1, LOW);
+      }
 
-      http.end();
     } else {
       Serial.printf("[HTTP} Unable to connect\n");
     }
@@ -67,8 +73,8 @@ void loop() {
 
     if (http.begin(client, "http://192.168.55.242/delete.php")) { // 데이터베이스 제어신호 데이터 삭제 페이지 요청
 
-      connect_web();
-
+      msg = connect_web();
+      
       http.end();
     } else {
       Serial.printf("[HTTP} Unable to connect\n");
@@ -78,7 +84,7 @@ void loop() {
   delay(1000);
 }
 
-void connect_web() {    // 웹서버 접속 여부에 따라 모터를 제어하는 함수
+String connect_web() {    // 웹서버 접속 여부에 따라 모터를 제어하는 함수
   Serial.print("[HTTP] GET...\n");
   // start connection and send HTTP header
   int httpCode = http.GET();
@@ -90,17 +96,12 @@ void connect_web() {    // 웹서버 접속 여부에 따라 모터를 제어하
 
     // file found at server
     if (httpCode == HTTP_CODE_OK || httpCode == HTTP_CODE_MOVED_PERMANENTLY) {
-      String payload = http.getString();
-      Serial.println(payload);
-
-      if(payload == "ON") {  // read.php가 출력하는 제어신호가 ON이면
-        digitalWrite(D1, HIGH);
-      }
-      else if(payload == "OFF") {
-        digitalWrite(D1, LOW);
-      }
+        String payload = http.getString();
+        Serial.println(payload);
+        return payload;
     }
   } else {
     Serial.printf("[HTTP] GET... failed, error: %s\n", http.errorToString(httpCode).c_str());
+    return "fail";
   }
 }

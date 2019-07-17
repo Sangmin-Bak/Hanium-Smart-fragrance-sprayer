@@ -19,7 +19,7 @@
             android:text="날씨"
             android:textSize="20dp"
             android:textColor="@color/colorWhite"
-            android:layout_marginLeft="160dp"/>
+            android:layout_gravity="center"/>
     </android.support.v7.widget.Toolbar>
 
     <android.support.v4.view.ViewPager

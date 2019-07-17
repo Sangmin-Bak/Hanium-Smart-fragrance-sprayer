@@ -3,8 +3,9 @@
 
     <PreferenceCategory android:title="사용자 설정">
         <SwitchPreference
-            android:key="message"
+            android:key="switch"
             android:title="자동 분사"/>
+
 
         <PreferenceScreen
             android:key="keyword_screen"

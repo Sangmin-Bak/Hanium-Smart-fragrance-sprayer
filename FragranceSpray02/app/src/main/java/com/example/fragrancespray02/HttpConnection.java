@@ -14,8 +14,7 @@ public class HttpConnection {
         return instance;
     }
 
-    private HttpConnection(){ this.client = new OkHttpClient(); }
-
+    private HttpConnection() { this.client = new OkHttpClient(); }
 
     /** 웹 서버로 요청을 한다. */
     public void requestWebServer(String spray_status, Callback callback) {

@@ -34,9 +34,6 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyBPU_PaJI1AkjwiSDRcFcpHsp-QjE_Q8hs" />
 
-        <activity
-            android:name=".MapsActivity"
-            android:label="@string/title_activity_maps"></activity>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -47,6 +44,7 @@
         <activity android:name=".ConditionActivity" />
         <activity android:name=".WeatherActivity" />
         <activity android:name=".SettingActivity" />
+        <activity android:name=".MapActivity"/>
     </application>
 
 </manifest>

@@ -15,7 +15,7 @@
             android:text="위치/실내상태"
             android:textSize="20dp"
             android:textColor="@color/colorWhite"
-            android:layout_marginLeft="120dp"/>
+            android:layout_gravity="center"/>
     </android.support.v7.widget.Toolbar>
 
     <TextView

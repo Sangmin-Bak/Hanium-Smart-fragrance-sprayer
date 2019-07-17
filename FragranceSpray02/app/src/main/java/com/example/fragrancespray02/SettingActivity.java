@@ -2,7 +2,9 @@ package com.example.fragrancespray02;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.preference.EditTextPreference;
 import android.preference.PreferenceActivity;
+import android.preference.SwitchPreference;
 import android.support.annotation.Nullable;
 
 /*
@@ -11,13 +13,22 @@ import android.support.annotation.Nullable;
  */
 public class SettingActivity extends PreferenceActivity {
 
+    SwitchPreference switchPreference;
+    EditTextPreference scent1, scent2, scent3;
+    EditTextPreference time;
+
     @SuppressLint("NewApi")
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //   setContentView(R.layout.activity_setting);
-
         addPreferencesFromResource(R.xml.setting_preference);
+
+        switchPreference = (SwitchPreference) findPreference("switch");
+        scent1 = (EditTextPreference) findPreference("first");
+        scent2 = (EditTextPreference) findPreference("second");
+        scent3 = (EditTextPreference) findPreference("third");
+        time = (EditTextPreference) findPreference("time_setting");
 
     }
 

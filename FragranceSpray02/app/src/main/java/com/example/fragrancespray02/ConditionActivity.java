@@ -33,8 +33,6 @@ public class ConditionActivity extends AppCompatActivity {
     private PrintWriter mOut;
     private Context mContext;
 
-    public GPSService gpsService;
-
     HttpConnection httpConn = HttpConnection.getInstance();
 
     FragmentManager fragmentManager;

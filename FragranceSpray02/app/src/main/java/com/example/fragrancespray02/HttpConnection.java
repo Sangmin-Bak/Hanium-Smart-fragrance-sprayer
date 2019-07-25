@@ -22,7 +22,34 @@ public class HttpConnection {
                 .add("spray_status", spray_status)
                 .build();
         Request request = new Request.Builder()
-                .url("http://192.168.55.242/Control.php")
+                .url("http://192.168.55.243/Control.php")
+                .post(body)
+                .build();
+        client.newCall(request).enqueue(callback);
+    }
+
+    // 아직 미완성
+    public void request_SettingTable(String[] set, Callback callback) {
+        RequestBody body = new FormBody.Builder()
+                .add("switch", set[0])
+                .add("first", set[1])
+                .add("second", set[2])
+                .add("third", set[3])
+                .build();
+        Request request = new Request.Builder()
+                .url("http://192.168.55.243/android_set.php")
+                .post(body)
+                .build();
+        client.newCall(request).enqueue(callback);
+    }
+
+    public void time_SettingTable(int hour, int min, Callback callback) {
+        RequestBody body = new FormBody.Builder()
+                .add("hour", String.valueOf(hour))
+                .add("minute", String.valueOf(min))
+                .build();
+        Request request = new Request.Builder()
+                .url("http://192.168.55.243/time_set.php")
                 .post(body)
                 .build();
         client.newCall(request).enqueue(callback);

@@ -16,6 +16,8 @@ import org.xml.sax.InputSource;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,6 +35,11 @@ public class WeatherActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_weather);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.weather_toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);    // 타이틀 없음
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);   // 뒤로가기 버튼
 
         textView = (TextView) findViewById(R.id.textView1);
         GetXMLTask task = new GetXMLTask();
@@ -85,5 +92,16 @@ public class WeatherActivity extends AppCompatActivity {
 
             super.onPostExecute(doc);
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case android.R.id.home:{ //toolbar의 back키 눌렀을 때 동작
+                finish();
+                return true;
+            }
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

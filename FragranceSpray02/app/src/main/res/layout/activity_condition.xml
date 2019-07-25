@@ -6,6 +6,7 @@
     android:orientation="vertical">
 
     <android.support.v7.widget.Toolbar
+        android:id="@+id/condition_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary">
@@ -17,6 +18,12 @@
             android:textColor="@color/colorWhite"
             android:layout_gravity="center"/>
     </android.support.v7.widget.Toolbar>
+
+    <fragment
+        android:id="@+id/maps"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        class="com.google.android.gms.maps.MapFragment" />
 
     <TextView
         android:id="@+id/textview"
@@ -38,11 +45,10 @@
         android:layout_height="wrap_content"
         android:text="향기 : "
         android:textSize="20dp"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="다음 분사 시간 : "
-        android:textSize="20dp"/>
+    <WebView
+        android:id="@+id/condition_web"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"/>
 
     <Button
         android:id="@+id/Button01"

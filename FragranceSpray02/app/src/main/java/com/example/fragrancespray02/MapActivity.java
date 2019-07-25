@@ -16,7 +16,9 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Toast;
@@ -97,6 +99,11 @@ public class MapActivity extends AppCompatActivity
         MapFragment mapFragment = (MapFragment) getFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.map_toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);    // 타이틀 없음
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);   // 뒤로가기 버튼
     }
 
     LocationCallback locationCallback = new LocationCallback() {
@@ -155,8 +162,6 @@ public class MapActivity extends AppCompatActivity
                 mGoogleMap.setMyLocationEnabled(true);
         }
     }
-
-
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
@@ -450,5 +455,16 @@ public class MapActivity extends AppCompatActivity
                 }
                 break;
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case android.R.id.home:{ //toolbar의 back키 눌렀을 때 동작
+                finish();
+                return true;
+            }
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

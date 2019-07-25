@@ -3,12 +3,20 @@ package com.example.fragrancespray02;
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -35,9 +43,6 @@ public class ConditionActivity extends AppCompatActivity {
 
     HttpConnection httpConn = HttpConnection.getInstance();
 
-    FragmentManager fragmentManager;
-    FragmentTransaction transaction;
-
     String return_msg;
 
     private static final int GPS_ENABLE_REQUEST_CODE = 2001;
@@ -49,22 +54,40 @@ public class ConditionActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_condition);
 
-        final TextView textview_address = (TextView) findViewById(R.id.textview);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.condition_toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);    // 타이틀 없음
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);   // 뒤로가기 버튼
 
-        // gps 활성화로 위치 정보를 받아온다.
-//        gpsService = new GPSService(this);
-//        String address =gpsService.getCurrentAddress(gpsService.getLatitude(), gpsService.getLongitude()); // 위도와 경도를 받아와 주소로 변환
-//        textview_address.setText(address);
+        final TextView textview_address = (TextView) findViewById(R.id.textview);
 
         Button btn = (Button) findViewById(R.id.Button01);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Toast.makeText(getApplicationContext(), "ON", Toast.LENGTH_SHORT).show();
-                return_msg = "ON";
+                return_msg = "1";
                 sendData(return_msg);
             }
         });
+
+        WebView webView = (WebView) findViewById(R.id.condition_web);
+        WebSettings webSettings = webView.getSettings();    // mobile web setting
+        webSettings.setJavaScriptEnabled(true);     // 자바스크립트 허용
+        webSettings.setLoadWithOverviewMode(true);      // 컨텐츠가 웹뷰보다 클 경우 스크린 크기에 맞게 조정
+
+        webView.loadUrl("http://192.168.55.242/read_set.php");      // DB에 저장된 분사기 상태를 보여줌
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case android.R.id.home:{ //toolbar의 back키 눌렀을 때 동작
+                finish();
+                return true;
+            }
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void sendData(final String return_msg) {
@@ -86,4 +109,13 @@ public class ConditionActivity extends AppCompatActivity {
             //Log.d(TAG, "서버에서 응답한 Body:"+body);
         }
     };
+
+    public boolean checkLocationServicesStatus() {
+        LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+
+        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
+                || locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+    }
+
+
 }

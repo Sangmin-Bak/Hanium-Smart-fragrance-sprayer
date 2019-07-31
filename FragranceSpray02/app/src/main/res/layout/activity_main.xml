@@ -28,10 +28,10 @@
         android:layout_marginTop="150dp"
         android:orientation="horizontal">
         <ImageView
-            android:id="@+id/location"
+            android:id="@+id/condition"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:src="@drawable/location"
+            android:src="@drawable/condition"
             android:layout_marginLeft="65dp" />
         <ImageView
             android:id="@+id/weather"
@@ -48,27 +48,13 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="위치"
-
-            android:layout_marginLeft="105dp"/>
+            android:text="위치/실내상태"
+            android:layout_marginLeft="75dp"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="날씨"
-            android:layout_marginLeft="100dp"/>
+            android:layout_marginLeft="75dp"/>
     </LinearLayout>
-
-    <ImageView
-        android:id="@+id/condition"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:src="@drawable/condition"
-        android:layout_marginLeft="130dp"
-        android:layout_marginTop="20dp"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="실내상태"
-        android:layout_marginLeft="155dp"/>
 
 </LinearLayout>

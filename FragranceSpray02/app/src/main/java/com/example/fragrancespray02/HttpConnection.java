@@ -1,5 +1,7 @@
 package com.example.fragrancespray02;
 
+import android.widget.Toast;
+
 import okhttp3.Callback;
 import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
@@ -28,16 +30,25 @@ public class HttpConnection {
         client.newCall(request).enqueue(callback);
     }
 
-    // 아직 미완성
-    public void request_SettingTable(String[] set, Callback callback) {
+    public void request_SettingTable(String set, Callback callback) {
         RequestBody body = new FormBody.Builder()
-                .add("switch", set[0])
-                .add("first", set[1])
-                .add("second", set[2])
-                .add("third", set[3])
+                .add("switch", set)
                 .build();
         Request request = new Request.Builder()
                 .url("http://192.168.55.243/android_set.php")
+                .post(body)
+                .build();
+        client.newCall(request).enqueue(callback);
+    }
+
+    public void fragrance_SettingTable(String first, String second, String third, Callback callback) {
+        RequestBody body = new FormBody.Builder()
+                .add("first", first)
+                .add("second", second)
+                .add("third", third)
+                .build();
+        Request request = new Request.Builder()
+                .url("http://192.168.55.243/fragrance_set.php")
                 .post(body)
                 .build();
         client.newCall(request).enqueue(callback);
@@ -55,4 +66,25 @@ public class HttpConnection {
         client.newCall(request).enqueue(callback);
     }
 
+    public void area_SettingTable(String area, Callback callback) {
+        RequestBody body = new FormBody.Builder()
+                .add("city", area)
+                .build();
+        Request request = new Request.Builder()
+                .url("http://192.168.55.243/City.php")
+                .post(body)
+                .build();
+        client.newCall(request).enqueue(callback);
+    }
+
+    public void weather_SettingTable(String weather, Callback callback) {
+        RequestBody body = new FormBody.Builder()
+                .add("weather", weather)
+                .build();
+        Request request = new Request.Builder()
+                .url("http://192.168.55.243/weather_set.php")
+                .post(body)
+                .build();
+        client.newCall(request).enqueue(callback);
+    }
 }

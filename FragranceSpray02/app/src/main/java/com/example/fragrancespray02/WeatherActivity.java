@@ -18,6 +18,8 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -41,67 +43,15 @@ public class WeatherActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowTitleEnabled(false);    // 타이틀 없음
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);   // 뒤로가기 버튼
 
-        textView = (TextView) findViewById(R.id.textView1);
-        GetXMLTask task = new GetXMLTask();
-        task.execute("http://www.kma.go.kr/wid/queryDFSRSS.jsp?zone=3017059700");
+        onWeatheredWeb();
     }
 
-    private class GetXMLTask extends AsyncTask<String, Void, Document> {
-        @Override
-        protected Document doInBackground(String... urls) {
-            URL url;
-            try {
-                url = new URL(urls[0]);
-                DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-                DocumentBuilder db = dbf.newDocumentBuilder(); // XML문서 빌더 객체를 생성
-                doc = db.parse(new InputSource(url.openStream())); // /XML문서를 파싱한다.
-                doc.getDocumentElement().normalize();
-            } catch (Exception e) {
-                Toast.makeText(getApplicationContext(), "Parsing Error", Toast.LENGTH_SHORT).show();
-            }
-            return doc;
-        }
+    private void onWeatheredWeb() {
+        WebView weatherWeb = (WebView) findViewById(R.id.weather_web);
+        WebSettings webSettings = weatherWeb.getSettings();    // mobile web setting
+        webSettings.setJavaScriptEnabled(true);     // 자바스크립트 허용
+        webSettings.setLoadWithOverviewMode(true);      // 컨텐츠가 웹뷰보다 클 경우 스크린 크기에 맞게 조정
 
-        @Override
-        protected void onPostExecute(Document doc) {
-
-            String s = "";
-            //data 태그가 있는 노드를 찾아서 리스트 형태로 만들어서 반환
-            NodeList nodeList = doc.getElementsByTagName("data");
-            //data 태그를 가지는 노드를 찾음, 계층적인 노드 구조를 반환
-
-            for(int i = 0; i< nodeList.getLength(); i++){
-
-                //날씨 데이터를 추출
-                s += "" +i + ": 날씨 정보: ";
-                Node node = nodeList.item(i); //data엘리먼트 노드
-                Element fstElmnt = (Element) node;
-                NodeList nameList  = fstElmnt.getElementsByTagName("temp");
-                Element nameElement = (Element) nameList.item(0);
-                nameList = nameElement.getChildNodes();
-                s += "온도 = "+ ((Node) nameList.item(0)).getNodeValue() +" ,";
-
-
-                NodeList websiteList = fstElmnt.getElementsByTagName("wfKor");
-                //<wfKor>맑음</wfKor> =====> <wfKor> 태그의 첫번째 자식노드는 TextNode 이고 TextNode의 값은 맑음
-                s += "날씨 = "+  websiteList.item(0).getChildNodes().item(0).getNodeValue() +"\n";
-
-            }
-
-            textView.setText(s);
-
-            super.onPostExecute(doc);
-        }
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
-            case android.R.id.home:{ //toolbar의 back키 눌렀을 때 동작
-                finish();
-                return true;
-            }
-        }
-        return super.onOptionsItemSelected(item);
+        weatherWeb.loadUrl("http://192.168.55.243/weather.php");      // DB에 저장된 분사기 상태를 보여줌
     }
 }

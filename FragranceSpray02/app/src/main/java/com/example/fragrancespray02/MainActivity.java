@@ -1,7 +1,6 @@
 package com.example.fragrancespray02;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
@@ -30,14 +29,14 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
-        ImageView location = (ImageView) findViewById(R.id.location);
-        ImageView weather = (ImageView) findViewById(R.id.weather);
+//        ImageView location = (ImageView) findViewById(R.id.location);
         ImageView condition = (ImageView) findViewById(R.id.condition);
+        ImageView weather = (ImageView) findViewById(R.id.weather);
 
-        location.setOnClickListener(new View.OnClickListener() {
+        condition.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                intent = new Intent(getApplicationContext(), MapActivity.class);
+                intent = new Intent(getApplicationContext(), ConditionActivity.class);
                 startActivity(intent);
             }
         });
@@ -48,13 +47,14 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        /*
         condition.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                intent = new Intent(getApplicationContext(), ConditionActivity.class);
+                intent = new Intent(getApplicationContext(), CondActivity.class);
                 startActivity(intent);
             }
-        });
+        });*/
     }
 
     //추가된 소스, ToolBar에 menu.xml을 인플레이트함

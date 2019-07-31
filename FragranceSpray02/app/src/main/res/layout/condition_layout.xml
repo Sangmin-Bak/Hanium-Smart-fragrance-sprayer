@@ -5,31 +5,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/condition_toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorPrimary">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="위치/실내상태"
-            android:textSize="20dp"
-            android:textColor="@color/colorWhite"
-            android:layout_gravity="center"/>
-    </android.support.v7.widget.Toolbar>
-
-    <fragment
-        android:id="@+id/maps"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        class="com.google.android.gms.maps.MapFragment" />
-
-    <TextView
-        android:id="@+id/textview"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="20dp" />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -48,12 +23,10 @@
     <WebView
         android:id="@+id/condition_web"
         android:layout_width="match_parent"
-        android:layout_height="50dp"/>
+        android:layout_height="50dp" />
     <WebView
         android:id="@+id/control_web"
-        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="250dp"/>
-
 
 </LinearLayout>

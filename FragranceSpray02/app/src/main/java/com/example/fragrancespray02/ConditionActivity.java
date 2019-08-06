@@ -84,7 +84,7 @@ public class ConditionActivity extends AppCompatActivity
 
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON,
                 WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-        setContentView(R.layout.activity_map);
+        setContentView(R.layout.activity_condition);
 
         mLayout = findViewById(R.id.layout_map);
 
@@ -111,8 +111,8 @@ public class ConditionActivity extends AppCompatActivity
         getSupportActionBar().setDisplayShowTitleEnabled(false);    // 타이틀 없음
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);   // 뒤로가기 버튼
 
-        fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.layout_map, new ConditionFragment()).commit();
+        onConditionWeb();
+        onControlWeb();
     }
 
     private void onConditionWeb() {
@@ -121,7 +121,7 @@ public class ConditionActivity extends AppCompatActivity
         webSettings.setJavaScriptEnabled(true);     // 자바스크립트 허용
         webSettings.setLoadWithOverviewMode(true);      // 컨텐츠가 웹뷰보다 클 경우 스크린 크기에 맞게 조정
 
-        conditionWeb.loadUrl("http://192.168.55.243/read_set.php");      // DB에 저장된 분사기 상태를 보여줌
+        conditionWeb.loadUrl("http://192.168.55.243/read_condition.php");      // DB에 저장된 분사기 상태를 보여줌
     }
 
     private void onControlWeb() {

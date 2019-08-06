@@ -2,35 +2,18 @@ package com.example.fragrancespray02;
 
 import android.Manifest;
 import android.content.Context;
-import android.content.Intent;
-import android.graphics.Color;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
-import android.webkit.WebViewClient;
-import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
-import java.io.IOException;
 import java.io.PrintWriter;
-import java.net.Socket;
-
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.Response;
 
 public class CondActivity extends AppCompatActivity {
 
@@ -52,7 +35,7 @@ public class CondActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_condition);
+        setContentView(R.layout.activity_cond);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.condition_toolbar);
         setSupportActionBar(toolbar);

@@ -1,59 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
-
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/condition_toolbar"
+    android:orientation="vertical"
+    android:id="@+id/layout_map"
+    tools:context=".MainActivity" >
+    
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorPrimary">
-        <TextView
-            android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/map_toolbar"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="위치/실내상태"
-            android:textSize="20dp"
-            android:textColor="@color/colorWhite"
-            android:layout_gravity="center"/>
-    </android.support.v7.widget.Toolbar>
+            android:background="@color/colorPrimary">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="위치"
+                android:textSize="20dp"
+                android:textColor="@color/colorWhite"
+                android:layout_gravity="center"/>
+        </android.support.v7.widget.Toolbar>
 
-    <fragment
-        android:id="@+id/maps"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        class="com.google.android.gms.maps.MapFragment" />
+        <ScrollView
+            android:id="@+id/condition_scroll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/textview"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="20dp" />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="현재 기온 : "
-        android:textSize="20dp"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="날씨 : "
-        android:textSize="20dp"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="향기 : "
-        android:textSize="20dp"/>
-    <WebView
-        android:id="@+id/condition_web"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"/>
-    <WebView
-        android:id="@+id/control_web"
-        android:layout_marginTop="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="250dp"/>
+        </ScrollView>
+        <fragment
+            android:id="@+id/map"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            class="com.google.android.gms.maps.MapFragment" />
+        <WebView
+            android:id="@+id/condition_web"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"/>
+        <WebView
+            android:id="@+id/control_web"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"/>
+
+    </LinearLayout>
 
 
-</LinearLayout>
+
+</ScrollView>

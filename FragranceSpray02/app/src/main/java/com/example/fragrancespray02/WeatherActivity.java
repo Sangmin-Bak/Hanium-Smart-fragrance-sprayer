@@ -54,4 +54,15 @@ public class WeatherActivity extends AppCompatActivity {
 
         weatherWeb.loadUrl("http://192.168.55.243/weather.php");      // DB에 저장된 분사기 상태를 보여줌
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case android.R.id.home:{ //toolbar의 back키 눌렀을 때 동작
+                finish();
+                return true;
+            }
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }
